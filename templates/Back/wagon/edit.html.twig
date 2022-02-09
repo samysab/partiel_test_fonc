@@ -1,0 +1,13 @@
+{% extends 'base_back.html.twig' %}
+
+{% block title %}PA Express - Wagon{% endblock %}
+
+
+{% block body %}
+    <h1>Edit Wagon</h1>
+
+    {{ include('Back/wagon/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    <a href="{{ path('admin_wagon_index') }}">Retour</a>
+
+{% endblock %}
