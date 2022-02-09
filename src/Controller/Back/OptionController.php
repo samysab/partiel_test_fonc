@@ -16,19 +16,9 @@ class OptionController extends AbstractController
     #[Route('/', name: 'option_index', methods: ['GET'])]
     public function index(OptionRepository $optionRepository): Response
     {
-        $userConnected = $this->get('security.token_storage')->getToken()->getUser();
-
-
-
-        if (in_array('COMPANY', $userConnected->getRoles())){
-            return $this->render('Back/option/index.html.twig', [
-                'options' => $optionRepository->findBy(array('owner' => $userConnected->getId()))
-            ]);
-        }else{
-            return $this->render('Back/option/index.html.twig', [
-                'options' => $optionRepository->findAll(),
-            ]);
-        }
+        return $this->render('Back/option/index.html.twig', [
+            'options' => $optionRepository->findAll(),
+        ]);
     }
 
     #[Route('/create', name: 'option_new', methods: ['GET','POST'])]

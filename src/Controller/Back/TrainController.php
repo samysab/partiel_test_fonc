@@ -18,16 +18,9 @@ class TrainController extends AbstractController
     #[Route('/', name: 'train_index', methods: ['GET'])]
     public function index(TrainRepository $trainRepository): Response
     {
-        $userConnected = $this->get('security.token_storage')->getToken()->getUser();
-        if (in_array('COMPANY', $userConnected->getRoles())){
-            return $this->render('Back/train/index.html.twig', [
-                'trains' => $trainRepository->findBy(array('owner' => $userConnected->getId()))
-                ]);
-        }else{
             return $this->render('Back/train/index.html.twig', [
                 'trains' => $trainRepository->findAll(),
             ]);
-        }
 
     }
 
@@ -37,11 +30,8 @@ class TrainController extends AbstractController
         $train = new Train();
         $form = $this->createForm(TrainType::class, $train);
         $form->handleRequest($request);
-
-        $userConnected = $this->get('security.token_storage')->getToken()->getUser();
-
+        
         if ($form->isSubmitted() && $form->isValid()) {
-            $train->setOwner($userConnected);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($train);
             $entityManager->flush();
