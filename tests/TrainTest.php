@@ -9,8 +9,8 @@ class TrainTest extends PantherTestCase
     {
         $client = static::createPantherClient(['external_base_uri' => 'http://localhost:8081']);
         $client->request('GET', '/admin/train');
-
-        sleep(100);
-        $client->takeScreenshot('aa.png');
+        sleep(5);
+        $client->executeScript("document.querySelector('#nouveau-train').click()");
+        sleep(55);
     }
 }
