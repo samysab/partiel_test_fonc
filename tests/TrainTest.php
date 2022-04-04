@@ -5,7 +5,7 @@ use Symfony\Component\Panther\PantherTestCase;
 
 class TrainTest extends PantherTestCase
 {
-    public function testMyApp(): void
+    public function testCreationTrain(): void
     {
         $client = static::createPantherClient(['external_base_uri' => 'http://localhost:8089']);
         $client->request('GET', '/admin/train');
@@ -26,20 +26,34 @@ class TrainTest extends PantherTestCase
         $client->executeScript("document.querySelector('#form-train').click()");
         $this->assertSelectorIsVisible(".toast");
         sleep(5);
+    }
 
-
+    public function testModify(): void{
+        $client = static::createPantherClient(['external_base_uri' => 'http://localhost:8089']);
+        $client->request('GET', '/admin/train');
+        sleep(3);
         /*
-         * Modification d'un train
-         */
-        $client->executeScript("document.querySelector('#btnModifier_11').click()");
+        * Modification d'un train
+        */
+        $client->executeScript("document.querySelector('#btnModifier_42').click()");
         sleep(2);
         $client->executeScript("document.querySelector('#train_name').value = 'modification du nom'");
         $client->executeScript("document.querySelector('#train_description').value = 'Description'");
-        sleep(2);
+        sleep(5);
         $client->waitForAttributeToContain("#train_name", "value" ,"modification du nom");
         $client->waitForAttributeToContain("#train_description", "value" ,"Description");
         $client->executeScript("document.querySelector('#form-train').click()");
+        $this->assertSelectorIsVisible("#btnModifier_42");
+        sleep(5);
+    }
 
+    public function testDeleteTrain(): void{
+        $client = static::createPantherClient(['external_base_uri' => 'http://localhost:8089']);
+        $client->request('GET', '/admin/train');
+        sleep(3);
 
+        $client->executeScript("document.querySelector('#btnDelete_46').click()");
+        sleep(3);
+        $this->assertSelectorWillExist("#btnDelete_42");
     }
 }

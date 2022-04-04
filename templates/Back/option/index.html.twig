@@ -34,9 +34,9 @@
                                 <a href="{{ path('admin_option_edit', {'id': option.id}) }}"><button class="btn">Modifier</button></a>
                             </div>
                             <div class="col">
-                                <form method="post" action="{{ path('admin_option_delete', {'id': option.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                                <form method="post" action="{{ path('admin_option_delete', {'id': option.id}) }}">
                                     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ option.id) }}">
-                                    <button class="btn">Supprimer</button>
+                                    <button class="btn" id="btnDeleteOption_{{ option.id }}">Supprimer</button>
                                 </form>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
         </tbody>
     </table>
 
-    <a href="{{ path('admin_option_new') }}">Create new</a>
+    <a id="btnCreateOption" href="{{ path('admin_option_new') }}">Create new</a>
 
 
 {% endblock %}
